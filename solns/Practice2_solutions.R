@@ -22,6 +22,8 @@ plot(girls$bmi, girls$weight)
 
 # Are males or females more likely to be bullied in the past 12 months? Calculate the percentage bullied for each gender.
 # Create separate datasets for bullied boys and bullied girls
+
+# doesn't work correctly, counts NAs
 bullied_boys <- 
   boys[boys$bullied_past_12mo == TRUE,]
 nrow(bullied_boys)
@@ -32,6 +34,7 @@ bullied_boys_prct
 # alternative:
 mean(boys$bullied_past_12mo, na.rm=TRUE)
 
+# doesn't work correctly, counts NAs
 bullied_girls <- 
   girls[girls$bullied_past_12mo == TRUE,]
 nrow(bullied_girls)
@@ -42,9 +45,12 @@ bullied_girls_prct
 # alternative
 mean(girls$bullied_past_12mo, na.rm=TRUE)
 
+# again must use which to remove NAs
+dim(mydata[mydata$bullied_past_12mo == TRUE,])
+dim(mydata[which(mydata$bullied_past_12mo == TRUE),])
 
-bullied_yes <- mydata[mydata$bullied_past_12mo == TRUE,]
-bullied_no <- mydata[mydata$bullied_past_12mo == FALSE,]
+bullied_yes <- mydata[which(mydata$bullied_past_12mo == TRUE),]
+bullied_no <- mydata[which(mydata$bullied_past_12mo == FALSE),]
 
 # Not bullied students have higher proportion of smokers
 summary(bullied_yes$smoked_ever)
